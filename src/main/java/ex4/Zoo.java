@@ -1,50 +1,75 @@
 package ex4;
 
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author Florent Callaou
+ * Classe Zoo
+ */
 public class Zoo {
 
+	/** zones : Map<String,Zone> */
+	private Map<String, Zone> zones;
+	/** nom : String */
 	private String nom;
-	private SavaneAfricaine savaneAfricaine;
-	private ZoneCarnivore zoneCarnivore;
-	private FermeReptile fermeReptile;
-	private Aquarium aquarium;
 	
+	/**
+	 * Constructeur de Zoo
+	 * @param nom
+	 */
 	public Zoo(String nom){
 		this.nom = nom;
+		this.zones = new HashMap<>();
+			
+		this.zones.put(ZoneCarnivore.NOM, new ZoneCarnivore());
+		this.zones.put(SavaneAfricaine.NOM, new SavaneAfricaine());
+		this.zones.put(FermeReptile.NOM, new FermeReptile());
+		this.zones.put(Aquarium.NOM, new Aquarium());
 	}
 	
-	public void addAnimal(String nomAnimal, String typeAnimal, String comportement){
-		if (typeAnimal.equals("MAMMIFERE") && comportement.equals("CARNIVORE")){
-			zoneCarnivore.addAnimal(typeAnimal, nomAnimal, comportement);
+	/**
+	 * Ajoute un animal dans la zone adequat
+	 * @param animal
+	 */
+	public void addAnimal(Animal animal){
+		
+		if (animal.getType().equals(CategorieAnimal.MAMMIFERE) && animal.getComportement().equals(CategorieComportement.CARNIVORE)){
+			zones.get(ZoneCarnivore.NOM).addAnimal(animal);
 		}
-		else if (typeAnimal.equals("MAMMIFERE") && comportement.equals("HERBIVORE")){
-			savaneAfricaine.addAnimal(typeAnimal, nomAnimal, comportement);
+		else if (animal.getType().equals(CategorieAnimal.MAMMIFERE) && animal.getComportement().equals(CategorieComportement.HERBIVORE)){
+			zones.get(SavaneAfricaine.NOM).addAnimal(animal);
 		}
-		else if (typeAnimal.equals("REPTILE")){
-			fermeReptile.addAnimal(typeAnimal, nomAnimal, comportement);
+		else if (animal.getType().equals(CategorieAnimal.REPTILE)){
+			zones.get(FermeReptile.NOM).addAnimal(animal);
 		}
-		else if (typeAnimal.equals("POISSON")){
-			aquarium.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
+		else if (animal.getType().equals(CategorieAnimal.POISSON)){
+			zones.get(Aquarium.NOM).addAnimal(animal);
+        }
+					
 	}
 	
-	public void afficherListeAnimaux(){
-		savaneAfricaine.afficherListeAnimaux();
-		zoneCarnivore.afficherListeAnimaux();
-		fermeReptile.afficherListeAnimaux();
-		aquarium.afficherListeAnimaux();
+	/**
+	 * Affiche la liste des animaux par zone
+	 * @param nomZone
+	 */
+	public void afficherListe(String nomZone){
+		zones.get(nomZone).afficherListeAnimaux();
 	}
 
-	/** Getter for nom
-	 * @return the nom
+	/** Getter for zones
+	 * @return the zones
 	 */
-	public String getNom() {
-		return nom;
+	public Map<String, Zone> getZones() {
+		return zones;
 	}
 
-	/** Setter
-	 * @param nom the nom to set
+	/** Setter for zones
+	 * @param zones the zones to set
 	 */
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setZones(Map<String, Zone> zones) {
+		this.zones = zones;
 	}
+
+	
 }
